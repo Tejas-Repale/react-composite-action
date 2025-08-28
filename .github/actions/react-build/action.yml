@@ -1,0 +1,51 @@
+name: "React Build Action"
+description: "Composite action to build and test a React WebApp"
+
+inputs:
+  node_version:
+    description: "Node.js version"
+    required: false
+    default: "20"
+  working_directory:
+    description: "Path to React app"
+    required: false
+    default: "."
+  install_command:
+    description: "Install dependencies command"
+    required: false
+    default: "npm install"
+  build_command:
+    description: "Build command"
+    required: false
+    default: "npm run build"
+  test_command:
+    description: "Test command"
+    required: false
+    default: "npm test"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ inputs.node_version }}
+
+    - name: Install dependencies
+      run: ${{ inputs.install_command }}
+      shell: bash
+      working-directory: ${{ inputs.working_directory }}
+
+    - name: Build project
+      run: ${{ inputs.build_command }}
+      shell: bash
+      working-directory: ${{ inputs.working_directory }}
+
+    - name: Run tests
+      run: ${{ inputs.test_command }}
+      shell: bash
+      working-directory: ${{ inputs.working_directory }}
+
