@@ -1,4 +1,4 @@
-name: React CI with Composite Action
+name: React CI
 
 on:
   push:
@@ -9,13 +9,14 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Run Composite Action
+      #  Step 1: Checkout your repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      #  Step 2: Use your composite action
+      - name: Run React Build Composite Action
         uses: ./.github/actions/react-build
-        with:
-          node_version: "20"
-          working_directory: "."
-          install_command: "npm install"
-          build_command: "npm run build"
-          test_command: "npm test"
+
 
