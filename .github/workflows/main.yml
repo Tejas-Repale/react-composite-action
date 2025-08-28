@@ -2,21 +2,20 @@ name: React CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      #  Step 1: Checkout your repository
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v3 
 
-      #  Step 2: Use your composite action
-      - name: Run React Build Composite Action
+      - name: Run React Composite Action
         uses: ./.github/actions/react-build
-
+        with:
+          node_version: "20"
 
